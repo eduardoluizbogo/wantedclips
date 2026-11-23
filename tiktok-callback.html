@@ -1,0 +1,45 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TikTok login - Wanted Clips</title>
+<style>
+:root{color-scheme:light dark;--bg:#fff;--fg:#1c1e21;--muted:#606770}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1115;--fg:#e8eaed;--muted:#9aa0a6}}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+max-width:720px;margin:0 auto;padding:32px 16px}
+h1{font-size:28px;margin:0 0 4px}h2{font-size:19px;margin:28px 0 6px}.muted{color:var(--muted)}
+a{color:inherit}
+</style></head><body>
+<h1>Connecting TikTok…</h1><div class="muted">Wanted Clips · Last updated November 18, 2026</div>
+
+<p id="msg">Sending the authorization back to the Wanted Clips app.</p>
+<div id="manual" hidden>
+<p>Copy this address and paste it where the app asks for it (<code>gta6clips auth tiktok</code>):</p>
+<textarea id="url" readonly rows="4" style="width:100%"></textarea>
+</div>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search), state = q.get("state") || "", origin = "";
+  var i = state.indexOf("~");
+  if (i >= 0) {
+    var b = state.slice(i + 1).replace(/-/g, "+").replace(/_/g, "/");
+    while (b.length % 4) b += "=";
+    try { origin = atob(b); } catch (e) { origin = ""; }
+  }
+  var ok = /^https?:\/\/(localhost|127\.0\.0\.1|\d{1,3}(\.\d{1,3}){3}|[a-z0-9-]+(\.[a-z0-9-]+)*\.ts\.net)(:\d{1,5})?$/i;
+  if (origin && ok.test(origin) && (q.get("code") || q.get("error"))) {
+    location.replace(origin + "/tiktok/callback" + location.search);
+    return;
+  }
+  document.getElementById("msg").textContent = q.get("code") || q.get("error")
+    ? "Almost done." : "This page receives the TikTok login for the " + "Wanted Clips" + " app.";
+  if (q.get("code") || q.get("error")) {
+    document.getElementById("manual").hidden = false;
+    document.getElementById("url").value = location.href;
+  }
+})();
+</script>
+<h2>Contact</h2>
+<p>Questions about this document: <a href="mailto:wantedclips01@gmail.com">wantedclips01@gmail.com</a>.
+</p>
+<p class="muted"><a href="terms.html">Terms of Service</a> · <a href="privacy.html">Privacy Policy</a></p>
+</body></html>
